@@ -3,8 +3,8 @@ AdventureWorks Cycles is a company that sells directly to retailers, who then se
 The sales manager at AdventureWorks has asked you to generate some reports containing details of the company's customers to support a direct sales campaign. Let's start with some basic exploration.
 
 Familiarize yourself with the Customer table by writing a Transact-SQL query that retrieves all columns for all customers.
+*/
 
-1.*/
 -- select all columns
 -- from the SalesLT.Customer table
 SELECT *
@@ -13,22 +13,23 @@ FROM SalesLT.Customer;
 --------------------------------------------------------------------------------------------------------------------------------
 
 /*Create a table that lists all customer contact names. The table should include the Title, FirstName, MiddleName, LastName and Suffix of all customers.
+*/
 
-2.*/
 -- select the Title, FirstName, MiddleName, LastName and Suffix columns
 -- from the Customer table
 SELECT Title, FirstName, MiddleName, LastName, Suffix
 FROM SalesLT.Customer;
 
 --------------------------------------------------------------------------------------------------------------------------------
+
 /*
 • Complete the query to list the following elements for all customers:
 • The salesperson
 • A column named CustomerName that displays how the customer contact should be greeted (e.g. "Mr Smith").
 • The customer's phone number (Phone)
 • Don't forget to space out the contents of your CustomerName column with + ' ' + and use the alias provided.
+*/
 
-3.*/
 -- finish the query
 SELECT SalesPerson, Title + ' ' + LastName AS CustomerName, Phone
 FROM SalesLT.Customer;
@@ -40,8 +41,8 @@ CAST(id AS VARCHAR)
 Put it to the test; as you continue to work with the AdventureWorks customer data, you must create queries for reports that have been requested by the sales team.
 
 Provide a list of all customer companies in the format <Customer ID>: <Company Name> (e.g. 78: Preferred Bikes). You'll need to use both CAST() and VARCHAR in your solution. Don't forget to use the alias provided.
+*/
 
-4.*/
 -- cast the CustomerID column to a VARCHAR and concatenate with the CompanyName column
 SELECT CAST(CustomerID AS VARCHAR) + ': ' + CompanyName AS CustomerCompany
 FROM SalesLT.Customer;
@@ -53,8 +54,8 @@ FROM SalesLT.Customer;
 	• The order date converted to ANSI standard format yyyy.mm.dd (e.g. 2015.01.31).
 
 Complete the query on the right to create the 2-column table that's specified above.
+*/
 
-5.*/
 -- finish the query
 SELECT SalesOrderNumber + ' (' + STR(RevisionNumber, 1) + ')' AS OrderRevision,
 	   CONVERT(NVARCHAR(30), OrderDate, 102) AS OrderDate
@@ -67,8 +68,8 @@ The list should consist of a single field in the format:
 	• <first name> <last name> (e.g. Keith Harris) if the middle name is unknown,
 	• <first name> <middle name> <last name> (e.g. Jane M. Gates) if a middle name is stored in the database.
 Retrieve customer contact names including middle names when they're known.
+*/
 
-6.*/
 -- use ISNULL to check for middle names and concatenate with FirstName and LastName
 SELECT FirstName + ' ' + ISNULL(MiddleName + ' ', '') + LastName
 AS CustomerName
@@ -84,8 +85,8 @@ UPDATE SalesLT.Customer
 SET EmailAddress = NULL
 WHERE CustomerID % 7 = 1;
 Write a query that returns a list of customer IDs in one column, and a second column called PrimaryContact that contains the email address if known, and otherwise the phone number.
+*/
 
-7.*/
 -- select the CustomerID, and use COALESCE with EmailAddress and Phone columns
 SELECT CustomerID, COALESCE(EmailAddress, Phone) AS PrimaryContact
 FROM SalesLT.Customer;
@@ -99,8 +100,8 @@ UPDATE SalesLT.SalesOrderHeader
 SET ShipDate = NULL
 WHERE SalesOrderID > 71899;
 Write a query to list sales order IDs and order dates with a column named ShippingStatus that contains the text 'Shipped' for orders with a known ship date, and 'Awaiting Shipment' for orders with no ship date.
+*/
 
-8.*/
 SELECT SalesOrderID, OrderDate,
   CASE
     WHEN ShipDate IS NULL THEN 'Awaiting Shipment'
